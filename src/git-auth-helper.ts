@@ -53,7 +53,7 @@ class GitAuthHelper {
 
     // Token auth header
     const serverUrl = urlHelper.getServerUrl(this.settings.githubServerUrl)
-    const baseURL = urlHelper.getBaseUrl(serverUrl.href)
+    const baseURL = urlHelper.getBaseUrl(serverUrl)
     this.tokenConfigKey = `http.${baseURL}/.extraheader` // "origin" is SCHEME://HOSTNAME[:PORT]
     const basicCredential = Buffer.from(
       `x-access-token:${this.settings.authToken}`,

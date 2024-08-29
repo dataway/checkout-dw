@@ -29,8 +29,8 @@ export function getServerUrl(url?: string): URL {
   return new URL(urlValue)
 }
 
-function getBaseUrl(u: URL) {
-  return u.protocol + "//" + u.host + u.pathname.replace(/\/+$/g, '');
+export function getBaseUrl(u: URL) {
+  return u.protocol + '//' + u.host + u.pathname.replace(/\/+$/g, '')
 }
 
 export function getServerApiUrl(url?: string): string {

@@ -168,7 +168,7 @@ class GitAuthHelper {
         this.settings = gitSourceSettings || {};
         // Token auth header
         const serverUrl = urlHelper.getServerUrl(this.settings.githubServerUrl);
-        const baseURL = urlHelper.getBaseUrl(serverUrl.href);
+        const baseURL = urlHelper.getBaseUrl(serverUrl);
         this.tokenConfigKey = `http.${baseURL}/.extraheader`; // "origin" is SCHEME://HOSTNAME[:PORT]
         const basicCredential = Buffer.from(`x-access-token:${this.settings.authToken}`, 'utf8').toString('base64');
         core.setSecret(basicCredential);
@@ -2454,7 +2454,7 @@ function getFetchUrl(settings) {
         return `${user}@${serviceUrl.hostname}:${encodedOwner}/${encodedName}.git`;
     }
     // "origin" is SCHEME://HOSTNAME[:PORT]
-    const baseURL = getBaseUrl(serviceUrl.href);
+    const baseURL = getBaseUrl(serviceUrl);
     return `${baseURL}/${encodedOwner}/${encodedName}`;
 }
 exports.getFetchUrl = getFetchUrl;
@@ -2465,9 +2465,8 @@ function getServerUrl(url) {
     return new url_1.URL(urlValue);
 }
 exports.getServerUrl = getServerUrl;
-function getBaseUrl(url) {
-    const matcher = url.match(/^[^?]+/);
-    return (matcher && matcher[0].replace(/\/+$/g, '')) || '';
+function getBaseUrl(u) {
+    return u.protocol + '//' + u.host + u.pathname.replace(/\/+$/g, '');
 }
 exports.getBaseUrl = getBaseUrl;
 function getServerApiUrl(url) {
