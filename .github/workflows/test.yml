@@ -43,6 +43,7 @@ jobs:
       - name: Checkout basic
         uses: ./
         with:
+          repository: actions/checkout
           ref: test-data/v2/basic
           path: basic
       - name: Verify basic
@@ -56,6 +57,7 @@ jobs:
       - name: Checkout clean
         uses: ./
         with:
+          repository: actions/checkout
           ref: test-data/v2/basic
           path: basic
       - name: Verify clean
@@ -66,11 +68,13 @@ jobs:
       - name: Checkout side by side 1
         uses: ./
         with:
+          repository: actions/checkout
           ref: test-data/v2/side-by-side-1
           path: side-by-side-1
       - name: Checkout side by side 2
         uses: ./
         with:
+          repository: actions/checkout
           ref: test-data/v2/side-by-side-2
           path: side-by-side-2
       - name: Verify side by side
@@ -81,6 +85,7 @@ jobs:
       - name: Fetch filter
         uses: ./
         with:
+          repository: actions/checkout
           filter: 'blob:none'
           path: fetch-filter
 
@@ -91,6 +96,7 @@ jobs:
       - name: Sparse checkout
         uses: ./
         with:
+          repository: actions/checkout
           sparse-checkout: |
             __test__
             .github
@@ -104,6 +110,7 @@ jobs:
       - name: Disabled sparse checkout
         uses: ./
         with:
+          repository: actions/checkout
           path: sparse-checkout
 
       - name: Verify disabled sparse checkout
@@ -114,6 +121,7 @@ jobs:
       - name: Sparse checkout (non-cone mode)
         uses: ./
         with:
+          repository: actions/checkout
           sparse-checkout: |
             /__test__/
             /.github/
@@ -140,6 +148,7 @@ jobs:
       - name: Checkout submodules false
         uses: ./
         with:
+          repository: actions/checkout
           ref: test-data/v2/submodule-ssh-url
           path: submodules-false
       - name: Verify submodules false
@@ -149,6 +158,7 @@ jobs:
       - name: Checkout submodules true
         uses: ./
         with:
+          repository: actions/checkout
           ref: test-data/v2/submodule-ssh-url
           path: submodules-true
           submodules: true
@@ -159,6 +169,7 @@ jobs:
       - name: Checkout submodules recursive
         uses: ./
         with:
+          repository: actions/checkout
           ref: test-data/v2/submodule-ssh-url
           path: submodules-recursive
           submodules: recursive
@@ -182,6 +193,7 @@ jobs:
       - name: Checkout basic using REST API
         uses: ./
         with:
+          repository: actions/checkout
           ref: test-data/v2/basic
           path: basic
       - name: Verify basic
@@ -208,6 +220,7 @@ jobs:
       - name: Checkout basic
         uses: ./
         with:
+          repository: actions/checkout
           ref: test-data/v2/basic
           path: basic
       - name: Verify basic
@@ -221,6 +234,7 @@ jobs:
       - name: Basic checkout using REST API
         uses: ./
         with:
+          repository: actions/checkout
           ref: test-data/v2/basic
           path: basic
       - name: Verify basic
@@ -240,6 +254,7 @@ jobs:
       - name: Checkout basic
         uses: ./
         with:
+          repository: actions/checkout
           ref: test-data/v2/basic
           path: basic
       - name: Verify basic
@@ -253,6 +268,7 @@ jobs:
       - name: Checkout basic using REST API
         uses: ./
         with:
+          repository: actions/checkout
           ref: test-data/v2/basic
           path: basic
       - name: Verify basic
@@ -272,6 +288,7 @@ jobs:
       - name: Checkout basic
         uses: ./localClone
         with:
+          repository: actions/checkout
           ref: test-data/v2/basic
       - name: Verify basic
         run: |

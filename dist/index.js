@@ -166,13 +166,14 @@ class GitAuthHelper {
         this.settings = gitSourceSettings || {};
         // Token auth header
         const serverUrl = urlHelper.getServerUrl(this.settings.githubServerUrl);
-        this.tokenConfigKey = `http.${serverUrl.origin}/.extraheader`; // "origin" is SCHEME://HOSTNAME[:PORT]
+        const baseURL = urlHelper.getBaseUrl(serverUrl);
+        this.tokenConfigKey = `http.${baseURL}/.extraheader`; // "origin" is SCHEME://HOSTNAME[:PORT]
         const basicCredential = Buffer.from(`x-access-token:${this.settings.authToken}`, 'utf8').toString('base64');
         core.setSecret(basicCredential);
         this.tokenPlaceholderConfigValue = `AUTHORIZATION: basic ***`;
         this.tokenConfigValue = `AUTHORIZATION: basic ${basicCredential}`;
         // Instead of SSH URL
-        this.insteadOfKey = `url.${serverUrl.origin}/.insteadOf`; // "origin" is SCHEME://HOSTNAME[:PORT]
+        this.insteadOfKey = `url.${baseURL}/.insteadOf`; // "origin" is SCHEME://HOSTNAME[:PORT]
         this.insteadOfValues.push(`git@${serverUrl.hostname}:`);
         if (this.settings.workflowOrganizationId) {
             this.insteadOfValues.push(`org-${this.settings.workflowOrganizationId}@github.com:`);
@@ -2436,6 +2437,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.getFetchUrl = getFetchUrl;
 exports.getServerUrl = getServerUrl;
+exports.getBaseUrl = getBaseUrl;
 exports.getServerApiUrl = getServerApiUrl;
 exports.isGhes = isGhes;
 const assert = __importStar(__nccwpck_require__(9491));
@@ -2451,7 +2453,8 @@ function getFetchUrl(settings) {
         return `${user}@${serviceUrl.hostname}:${encodedOwner}/${encodedName}.git`;
     }
     // "origin" is SCHEME://HOSTNAME[:PORT]
-    return `${serviceUrl.origin}/${encodedOwner}/${encodedName}`;
+    const baseURL = getBaseUrl(serviceUrl);
+    return `${baseURL}/${encodedOwner}/${encodedName}`;
 }
 function getServerUrl(url) {
     let resolvedUrl = process.env['GITHUB_SERVER_URL'] || 'https://github.com';
@@ -2459,6 +2462,9 @@ function getServerUrl(url) {
         resolvedUrl = url;
     }
     return new url_1.URL(resolvedUrl);
+}
+function getBaseUrl(u) {
+    return u.protocol + '//' + u.host + u.pathname.replace(/\/+$/g, '');
 }
 function getServerApiUrl(url) {
     if (hasContent(url, WhitespaceMode.Trim)) {
